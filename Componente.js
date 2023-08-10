@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Database from './Database';
 export default function AppTarefa(props){
     const [visible,setVisible]=useState(false);
-    const [tarefa,setTarefa]=useState('');
+    const [editIndex, setEditIndex] = useState(-1);
     function handleDeletePress(){
         Alert.alert("Atenção",
         "Você tem certeza que deseja excluir essa tarefa?",
@@ -29,27 +29,9 @@ export default function AppTarefa(props){
         );
     }
    async function handleEditPress(){
-    
-                setVisible(true);
-                const item = await Database.getItem(props.tarefa,props.id);
-                
-                props.navigation.navigate('AppList',item); 
-              
-                                
-    }
-    function handleVisibleModal(){
-        setVisible(!visible);
-      }
-      async function handleSave(id,newtask){
-
-        setVisible(false);
-        
-        var todosArray =[...props.tarefa];
-       todosArray.splice(id,1,{text:newtask,id:id});
-        props.setTarefa(props.tarefa);
-        
-        
-      }
+    const item= await Database.getItem(props.id);
+    props.navigation.navigate('AppForm',item);       
+   }
     return(
         <View style={styles.container}>
             <Text style={styles.textItem}>{props.tarefa}</Text>
@@ -64,24 +46,6 @@ export default function AppTarefa(props){
             </TouchableOpacity>
             
         </View>           
-        <Modal 
-    animationType='fade'
-        visible={visible}>
-          <View>
-            <TouchableOpacity onPress={handleVisibleModal}>
-              <Text style={styles.textom}>Close</Text>
-            </TouchableOpacity>
-          <TextInput style={styles.inputm} 
-        placeholderTextColor='#999'
-        onChangeText={props.setTarefa}
-        value={props.tarefa} 
-        editable={true}
-      />
-      <TouchableOpacity style={styles.buttonm} onPress={handleSave} >
-        <Text style={{color:'white',fontSize:20,fontWeight:'bold'}}>Salvar</Text>
-        </TouchableOpacity>
-        </View>
-        </Modal>
     </View>
     
  );

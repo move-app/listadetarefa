@@ -8,7 +8,7 @@ export default function AppList({route, navigation}){
     const [tarefas,setTarefas]=useState([]);
     
         useEffect(() => {
-            Database.getItems('tarefas').then(tarefas=>setTarefas(tarefas));
+            Database.getItems().then(tarefas=>setTarefas(tarefas));
         }, [route]);
     return(
         <View style={styles.container}>

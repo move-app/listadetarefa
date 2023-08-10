@@ -1,20 +1,27 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput,TouchableOpacity} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Database from './Database';
-export default function AppForm({navigation}){
+export default function AppForm({route,navigation}){
+  const id = route.params ? route.params.id:undefined;
     const [tarefa, setTarefa] = useState('');
+useEffect(() => {
+  if(!route.params) 
+  return;
+  setTarefa(route.params.tarefa);
+}, [route])
   function handleTarefaChange(tarefa){ 
     setTarefa(tarefa);
   }
     
-    async function handleButtonPress(){ 
-      const listTarefa ={tarefa:tarefa};
-      await Database.saveItem('tarefas',listTarefa);
-     navigation.navigate("AppList",listTarefa);
-      }
-      return(
+async function handleButtonPress(){ 
+            const listTarefa ={tarefa};
+            await Database.saveItem(listTarefa,id);
+            navigation.navigate("AppList",listTarefa);
+}
+      
+          return(
         <View style={styles.container}>
             <Text style={styles.title}>Adicionar Tarefa</Text>
                 <View style={styles.inputContainer}> 
@@ -25,10 +32,10 @@ export default function AppForm({navigation}){
                         clearButtonMode="always"
                         value={tarefa} 
                          /> 
- <TouchableOpacity style={styles.button} onPress={handleButtonPress}> 
- <Text style={styles.buttonText}>Salvar</Text> 
- </TouchableOpacity> 
- </View>
+           <TouchableOpacity style={styles.button} onPress={handleButtonPress}> 
+        <Text style={styles.buttonText}>Salvar</Text> 
+        </TouchableOpacity> 
+    </View>
  <StatusBar style="light" />
  </View>
  );

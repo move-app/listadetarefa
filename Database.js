@@ -12,18 +12,23 @@ function getItems(database) {
  const savedItems = await getItems(database);
 return savedItems.findIndex(item => item.id === id);
     }
-    async function saveItem(database, item, id) {
-         item.id = id ? id : new Date().getTime();
-         const savedItems = await getItems(database);
-         if (id) {
-        findIndex(item => item.id === id);
-         const index = await savedItems.findIndex(item => item.id === id);
-         savedItems[index] = item;
-         }
-         else
-         savedItems.push(item);
-         return AsyncStorage.setItem(database, JSON.stringify(savedItems));
-        }
+    10
+11
+12
+13
+async function saveItem(listItem, id){
+    listItem.id = id ? id : new Date().getTime()
+    const savedItems = await getItems();
+ 
+    if(id){
+        const index = await savedItems.findIndex(item => item.id === id);
+        savedItems[index] = listItem;
+    }
+    else
+      savedItems.push(listItem);
+ 
+    return AsyncStorage.setItem('items', JSON.stringify(savedItems));
+}
         async function deleteItem(database, id){
             let savedItems = await 
            getItems(database);
