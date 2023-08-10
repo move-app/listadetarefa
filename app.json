@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "listadetarefa",
-    "slug": "listadetarefa",
+    "name": "Lista de tarefas",
+    "slug": "lista-de-tarefas",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,13 +21,19 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "package": "com.app.listadetarefas",
+      "versionCode": 13
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "77b84a5b-aff0-45b4-826e-abee8e405bda"
+      }
+    },
+    "plugins": [
+      "react-native-health"
+    ]
   }
 }
