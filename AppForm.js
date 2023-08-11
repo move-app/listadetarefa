@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Database from './Database';
 export default function AppForm({route,navigation}){
-  const id = route.params ? route.params.id:undefined;
+  const id = route.params ? route.params.id : undefined;
     const [tarefa, setTarefa] = useState('');
 useEffect(() => {
   if(!route.params) 
@@ -16,9 +16,9 @@ useEffect(() => {
   }
     
 async function handleButtonPress(){ 
-            const listTarefa ={tarefa};
-            await Database.saveItem(listTarefa,id);
-            navigation.navigate("AppList",listTarefa);
+            const listTarefa = {tarefa};
+             Database.saveItem(listTarefa,id)
+           .then(response=>navigation.navigate("AppList",listTarefa));
 }
       
           return(
@@ -30,7 +30,7 @@ async function handleButtonPress(){
                         onChangeText={handleTarefaChange} 
                         placeholder="Adicione uma tarefa"
                         clearButtonMode="always"
-                        value={tarefa} 
+                        value={tarefa}
                          /> 
            <TouchableOpacity style={styles.button} onPress={handleButtonPress}> 
         <Text style={styles.buttonText}>Salvar</Text> 

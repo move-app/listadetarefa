@@ -19,9 +19,9 @@ export default function AppTarefa(props){
         {
             text:"Sim",
             onPress: async  ()=>{
-                await Database.deleteItem('tarefas',props.id);
+                Database.deleteItem(props.id).then(response =>props.navigation.navigate("AppList", {id: props.id}));
                 
-                props.navigation.navigate("AppList", {id: props.id});
+                
             },
         }
     ],
@@ -29,12 +29,12 @@ export default function AppTarefa(props){
         );
     }
    async function handleEditPress(){
-    const item= await Database.getItem(props.id);
+    const item = await Database.getItem(props.id);
     props.navigation.navigate('AppForm',item);       
    }
     return(
         <View style={styles.container}>
-            <Text style={styles.textItem}>{props.tarefa}</Text>
+            <Text style={styles.textItem}>{props.item}</Text>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity onPress={handleDeletePress} style={styles.deleteButton} >
                         <Icon.Trash  

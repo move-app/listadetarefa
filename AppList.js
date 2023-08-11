@@ -19,7 +19,7 @@ export default function AppList({route, navigation}){
  contentContainerStyle={styles.itemsContainer}>
  {tarefas.map(item => {
  return <AppTarefa 
-key={item.id} id={item.id} tarefa={item.tarefa}
+key={item.id} id={item.id} item={item.tarefa}
 navigation={navigation} />
  })}
  </ScrollView>
