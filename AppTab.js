@@ -1,47 +1,44 @@
 import React from 'react';
-import { StyleSheet, Text, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import AppList from './AppList';
 import AppForm from './AppForm';
-import * as Icon from 'react-native-feather';
-const {Navigator, Screen} = createBottomTabNavigator();
-export default function AppTab(){
-    return(
+
+const { Navigator, Screen } = createBottomTabNavigator();
+
+function AppTab() {
+    return (
         <NavigationContainer>
             <Navigator
-            
-             screenOptions={{ 
-                
-                headerStyle: 
-                { elevation: 0,
-                    shadowOpacity: 0,
-                    height: 64,
-                },
-                tabBarStyle: {
-                    flexDirection:'row',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                },
-                tabBarLabelStyle: {
-                    fontSize: 13,
-                    marginLeft: 16
-                },
-                tabBarInactiveBackgroundColor:'#fafafc',
-                tabBarActiveBackgroundColor: '#ebebf5',
-                tabBarInactiveTintColor: '#c1bccc',
-                tabBarActiveTintColor:'#32264d'
- }
- 
-}
- >
-    <Screen name="AppList" 
-component={AppList} options={{ 
-tabBarLabel: "Tarefas" }} />
- <Screen name="AppForm" 
-component={AppForm} options={{ 
-tabBarLabel: "Adicionar" }} />
- </Navigator>
- </NavigationContainer>
+                screenOptions={{
+                    tabBarActiveTintColor: "#32264d",
+                    tabBarInactiveTintColor: "#c1bccc",
+                    tabBarActiveBackgroundColor: "#ebebf5",
+                    tabBarInactiveBackgroundColor: "#fafafc",
+                    tabBarLabelStyle: {
+                        fontSize: 13,
+                        position: 'absolute',
+                        top: 15,
+                        bottom: 0,
+                        left: 0,
+                        right: 0
+                    },
+                    tabBarIconStyle: { display: "none" }
+                }}
+            >
+                <Screen name="AppList" component={AppList}
+                    options={{
+                        tabBarLabel: "Tarefas"
+                    }}
+                />
+                <Screen name="AppForm" component={AppForm}
+                    options={{
+                        tabBarLabel: "Adicionar"
+                    }}
+                />
+            </Navigator>
+        </NavigationContainer>
     );
 }
+export default AppTab;
