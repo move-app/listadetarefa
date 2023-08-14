@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import AppList from './AppList';
 import AppForm from './AppForm';
+import AppEdit from './AppEdit';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -35,6 +36,11 @@ function AppTab() {
                 <Screen name="AppForm" component={AppForm}
                     options={{
                         tabBarLabel: "Adicionar"
+                    }}
+                />
+                <Screen name="AppEdit" component={AppEdit}
+                    options={{
+                        tabBarLabel: "Editar"
                     }}
                 />
             </Navigator>

@@ -1,38 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Database from './Database';
-
-export default function AppForm({ route, navigation,props }) {
-  const id = route.params ? route.params.id : undefined;
-  const [tarefa, setTarefa] = useState('');
-  useEffect(() => {
-    if (!route.params) return;
-    setTarefa(route.params.tarefa);
-  }, [route])
-
-  function handleTarefaChange(tarefa) { 
-    setTarefa(tarefa);
-  }
+export default function AppEdit({setTarefa,tarefa}){
+   
   
-  async function handleButtonPress(){ 
-    const listItem = {tarefa};
-    Database.saveItem(listItem, id)
-      .then(response => navigation.navigate("AppList", listItem));
-  }
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tarefa</Text>
+    const [editing, setEditing] = useState(false);
+    // ...
+    const handleEditing = () => {
+      setEditing(true);
+    };
+    function handleEditInputChange(e) {
+        // set the new state value to what's currently in the edit input box
+        setTarefa({ ...tarefa, text: e.target.value });
+        console.log(tarefa);
+      }
+    return(
+        <View style={styles.container}>
+      <Text style={styles.title}>Editar a Tarefa</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           value={tarefa}
-          onChangeText={handleTarefaChange}
-          placeholder="Tarefa"
-           />
-        <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
-          <Text style={styles.buttonText}>{id !== -1 ? "Update Task" : "Add Task"}</Text>
+          placeholder="Editar a Tarefa"
+          />
+        <TouchableOpacity style={styles.button} onPress={handleEditInputChange}>
+          <Text style={styles.buttonText}>Salvar</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="light" />
