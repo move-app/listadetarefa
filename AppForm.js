@@ -4,20 +4,26 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Database from './Database';
 
-export default function AppForm({ route, navigation }) {
-  const id = route.params ? route.params.id : undefined;
-  const [tarefa, setTarefa] = useState('');
+export default function AppForm({ route, navigation }) {  
+  const [tarefa, setTarefa] = useState('');  
+  const [editMode, setEditMode] = useState(route?.params?.edit ?? false);  
+  let id = route?.params && route?.params?.edit ? route.params.item.id : undefined;  
+  
   useEffect(() => {
     if (!route.params) return;
-    setTarefa(route.params.tarefa);
+    setTarefa(route.params.item.tarefa);
+    setEditMode(route.params.edit);
   }, [route])
 
   function handleTarefaChange(tarefa) { setTarefa(tarefa); }
   
   async function handleButtonPress(){ 
     const listItem = {tarefa};
-    Database.saveItem(listItem, id)
-      .then(response => navigation.navigate("AppList", listItem));
+    Database.saveItem(listItem, editMode ? id : undefined)
+    .then(response => navigation.navigate("AppList", listItem));
+    
+    setTarefa("");    
+    setEditMode(false);
   }
   return (
     <View style={styles.container}>
