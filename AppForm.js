@@ -5,11 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Database from './Database';
 
 export default function AppForm({ route, navigation,props }) {
-  const id = route.params ? route.params.id : undefined;
-  const [tarefa, setTarefa] = useState('');
+  const [tarefa, setTarefa] = useState('');  
+  const [editMode, setEditMode] = useState(route?.params?.edit ?? false);  
+  let id = route?.params && route?.params?.edit ? route.params.item.id : undefined;  
   useEffect(() => {
     if (!route.params) return;
-    setTarefa(route.params.tarefa);
+    setTarefa(route.params.item.tarefa);
+    setEditMode(route.params.edit);
   }, [route])
 
   function handleTarefaChange(tarefa) { 
@@ -18,8 +20,11 @@ export default function AppForm({ route, navigation,props }) {
   
   async function handleButtonPress(){ 
     const listItem = {tarefa};
-    Database.saveItem(listItem, id)
-      .then(response => navigation.navigate("AppList", listItem));
+    Database.saveItem(listItem, editMode ? id : undefined)
+    .then(response => navigation.navigate("AppList", listItem));
+
+    setTarefa("");    
+    setEditMode(false);
   }
   return (
     <View style={styles.container}>
@@ -32,7 +37,7 @@ export default function AppForm({ route, navigation,props }) {
           placeholder="Tarefa"
            />
         <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
-          <Text style={styles.buttonText}>{id !== -1 ? "Update Task" : "Add Task"}</Text>
+          <Text style={styles.buttonText}>Salvar</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="light" />
